@@ -7,7 +7,7 @@ GIST (Genes InterSect Tool)
 :authors: Komal Rathi
 :contact: rathik@email.chop.edu
 :organization: DBHi, CHOP
-:status: This is "work in progress".
+:status: This is "work in progress"
 :date: |date|
 
 .. meta::
