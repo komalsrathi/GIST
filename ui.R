@@ -12,7 +12,8 @@ dashboardPage(
   dashboardSidebar(width = 300, div(style="overflow-y: scroll"),
                    sidebarMenu(
                      menuItem("Get Intersections", icon = icon("dashboard"), tabName = "dashboard",
-                              badgeLabel = "new", badgeColor = "green")
+                              badgeLabel = "new", badgeColor = "green"),
+                     menuItem("Data Description", icon = icon("database"), tabName = "database")
                      )
                    ),
   dashboardBody(
@@ -40,32 +41,43 @@ dashboardPage(
     div(style="overflow-x: scroll"),
     
     tabItems(
+      tabItem(tabName = "database",
+              DT::dataTableOutput(outputId = "dt1", width = "100%", height = "auto")
+              ),
       tabItem(tabName = "dashboard",
               fluidRow(
-                box(title = "Differential Expression", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
+                box(title = "Primary", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
                     selectInput(inputId = "selectinput1",
-                                label = "Select one or more",
-                                choices = c('MYCN Amplified', 'TCGA vs Normals', 'None'),
+                                label = "Select one",
+                                choices = c('TARGET NBL MYCN Amplified-Non Amplified (Upregulated)'='TARGETNBL_MYCN_AmplifiedvsNonAmplified_Upreg.RDS',
+                                            'TARGET NBL MYCN Amplified-Non Amplified (Downregulated)'='TARGETNBL_MYCN_AmplifiedvsNonAmplified_Downreg.RDS',
+                                            'TARGET NBL-GTEx Normals (Upregulated)'='TARGETNBLvsGTExNormals_upreg.RDS',
+                                            'TARGET NBL-GTEx Normals (Downregulated)'='TARGETNBLvsGTExNormals_downreg.RDS',
+                                            'TARGET NBL-GTEx Normals Primary (Upregulated)'='TARGETNBLPrimaryvsGTExNormals_upreg.RDS',
+                                            'TARGET NBL-GTEx Normals Primary (Downregulated)'='TARGETNBLPrimaryvsGTExNormals_downreg.RDS',
+                                            'TARGET NBL-GTEx Normals Primary HR (Upregulated)'='TARGETNBLPrimaryHRvsGTExNormals_upreg.RDS',
+                                            'TARGET NBL-GTEx Normals Primary HR (Downregulated)'='TARGETNBLPrimaryHRvsGTExNormals_downreg.RDS'),
                                 selected = NULL,
-                                multiple = TRUE),
-                    actionLink("selectall1","Select All")),
-                box(title = "External", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
+                                multiple = FALSE)),
+                box(title = "Secondary", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
                     selectInput(inputId = "selectinput2", 
                                        label = "Select one or more",
-                                       choices=c('IMPACT'='IMPACT.RDS',
-                                                 'Transmembrane (Compartments)'='TMList.RDS',
-                                                 'GTEx Normal Expression (95% of Samples < FPKM 5)'='Normals_Samples95FPKM5.RDS'), 
+                                       choices=c('IMPACT' = 'IMPACT.RDS',
+                                                 'Transmembrane (Compartments)' = 'TMList.RDS',
+                                                 'GTEx Normal Expression (95% of Samples < FPKM 5)' = 'Normals_Samples95FPKM5.RDS',
+                                                 'GTEx Normal Expression (95% of Samples < FPKM 10)' = 'Normals_Samples95FPKM10.RDS',
+                                                 'GTEx Normal Expression (95% of Samples < FPKM 1)' = 'Normals_Samples95FPKM1.RDS'), 
                                        selected = NULL,
                                 multiple = TRUE),
                     actionLink("selectall2","Select All")),
                 box(title = "Input your own list", status = "danger", width = 3, solidHeader = TRUE, collapsible = T, 
                     fileInput(inputId = "fi1", 
                               label = "Input one file (must have *GeneList* as column)", 
-                              multiple = T, 
+                              multiple = F, 
                               accept = c('csv','tsv','txt')))),
                 fluidRow(column(5, actionButton(inputId = "submit1", label = "Update output"))), 
                 br(),br(),
-                DT::dataTableOutput(outputId = "dt1", width = "100%", height = "auto")
+                DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto")
           )
       ) 
   ) 
