@@ -53,12 +53,20 @@ shinyServer(function(input, output, session){
       if(!is.null(data)){
         total <- merge(data, total, by = "GeneList")
       }
-    
+      myDat <<- total
       viewDataTable(dat = total)
     })
   })
   
-  
+  # download table
+  output$downloadData <- downloadHandler(
+    filename = function() { 
+      paste('output.csv', sep='') 
+    },
+    content = function(file) {
+      write.csv(myDat, file, row.names = F)
+    }
+  )
   
 })
 
