@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(shinyjs)
 library(DT)
 library(plotly)
 library(reshape2)
@@ -46,7 +47,7 @@ dashboardPage(
               ),
       tabItem(tabName = "dashboard",
               fluidRow(
-                box(title = "Primary", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
+                box(title = "Datasets", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
                     selectInput(inputId = "selectinput1",
                                 label = "Select one",
                                 choices = c('TARGET NBL MYCN Amplified-Non Amplified (Upregulated)'='TARGETNBL_MYCN_AmplifiedvsNonAmplified_Upreg.RDS',
@@ -59,7 +60,7 @@ dashboardPage(
                                             'TARGET NBL-GTEx Normals Primary HR (Downregulated)'='TARGETNBLPrimaryHRvsGTExNormals_downreg.RDS'),
                                 selected = NULL,
                                 multiple = FALSE)),
-                box(title = "Secondary", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
+                box(title = "Lists", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
                     selectInput(inputId = "selectinput2", 
                                        label = "Select one or more",
                                        choices=c('IMPACT' = 'IMPACT.RDS',
@@ -75,7 +76,8 @@ dashboardPage(
                               label = "Input one file (must have *GeneList* as column)", 
                               multiple = F, 
                               accept = c('csv','tsv','txt')))),
-                fluidRow(column(5, actionButton(inputId = "submit1", label = "Update output"))), 
+                fluidRow(column(5, actionButton(inputId = "submit1", label = "Update output"),
+                                '||',downloadButton('downloadData', 'Download'))), 
                 br(),br(),
                 DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto")
           )
