@@ -19,7 +19,7 @@ viewDataTable <- function(dat){
                   searchHighlight = TRUE,
                   lengthMenu = list(c(5, 10, 15, 20, 25, -1), c('5', '10', '15', '20', '25', 'All')),
                   initComplete = JS("function(settings, json) {",
-                                    "$(this.api().table().header()).css({'background-color': '#005ab3', 'color': '#fff'});",
+                                    "$(this.api().table().header()).css({'background-color': '#373737', 'color': '#fff'});",
                                     "}"),
                   scrollX = TRUE
                 ))
