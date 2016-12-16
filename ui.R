@@ -7,6 +7,7 @@ library(reshape2)
 library(ggplot2)
 options(gsubfn.engine = "R")
 library(ggthemes)
+library(plyr)
 
 dashboardPage(
   dashboardHeader(title = 'Gene InterSect Tool (GIST)', titleWidth = 300),
@@ -76,10 +77,16 @@ dashboardPage(
                               label = "Input one file (must have *GeneList* as column)", 
                               multiple = F, 
                               accept = c('csv','tsv','txt')))),
-                fluidRow(column(5, actionButton(inputId = "submit1", label = "Update output"),
-                                '||',downloadButton('downloadData', 'Download'))), 
-                br(),br(),
-                DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto")
+              fluidRow(column(5, actionButton(inputId = "submit1", label = "Update output"),
+                              downloadButton('downloadData', 'Download'))), 
+              br(),br(),
+              # fluidRow(
+              #   column(6,
+              #   DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto")),
+              #   column(6,plotlyOutput(outputId = 'plot1', width = "100%", height = "auto"))
+              # )
+              DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto"),
+              plotlyOutput(outputId = 'plot1', width = "100%", height = "auto")
           )
       ) 
   ) 
