@@ -60,7 +60,7 @@ dashboardPage(
                                             'TARGET NBL-GTEx Normals Primary HR (Upregulated)'='TARGETNBLPrimaryHRvsGTExNormals_upreg.RDS',
                                             'TARGET NBL-GTEx Normals Primary HR (Downregulated)'='TARGETNBLPrimaryHRvsGTExNormals_downreg.RDS'),
                                 selected = NULL,
-                                multiple = FALSE)),
+                                multiple = T)),
                 box(title = "Lists", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
                     selectInput(inputId = "selectinput2", 
                                        label = "Select one or more",
