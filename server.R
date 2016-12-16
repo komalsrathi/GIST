@@ -33,6 +33,7 @@ shinyServer(function(input, output, session){
   # update output data table
   output$dt2 <- DT::renderDataTable({
     total <- data.frame()
+    total.all <- data.frame()
     if(input$submit1 == 0){
       return()
     }
@@ -42,18 +43,28 @@ shinyServer(function(input, output, session){
         dat <- readRDS(file = paste0('data/',dt[i]))
         if(i == 1){
           total <- dat
+          total.all <- unique(as.character(dat$GeneList))
         }
         if(i > 1){
-          total <- merge(dat, total, by = "GeneList")
+          total <- unique(merge(dat, total, by = "GeneList"))
+          total.all <- c(total.all, unique(as.character(dat$GeneList)))
         }
       }
+      
+      # count the number of datasets
+      ct <<- length(dt)
       
       # custom list
       data <- fileInput()
       if(!is.null(data)){
-        total <- merge(data, total, by = "GeneList")
+        ct <<- ct + 1
+        total <- unique(merge(data, total, by = "GeneList"))
+        total.all <- c(total.all, unique(as.character(data$GeneList)))
       }
+      
+      print(ct)
       myDat <<- total
+      forbar <<- data.frame(GeneList = total.all)
       viewDataTable(dat = total)
     })
   })
@@ -67,6 +78,34 @@ shinyServer(function(input, output, session){
       write.csv(myDat, file, row.names = F)
     }
   )
+  
+  # plot
+  output$plot1 <- renderPlotly({
+    if(input$submit1 == 0){
+      return()
+    }
+    isolate({
+      forbar <- as.data.frame(table(as.character(forbar$GeneList)))
+      colnames(forbar)[2] <- 'dataset'
+      forbar.plot <- plyr::count(forbar$dataset)
+      forbar.plot <- forbar.plot[which(forbar.plot$x <= ct),]
+      forbar <- merge(forbar, forbar.plot, by.x = 'dataset', by.y = 'x')
+      forbar <- ddply(forbar, .(dataset, freq), summarize, Var1 = toString(Var1))
+      forbar <- forbar[order(forbar$freq),]
+      # p <- ggplot(data = forbar, aes(x = as.factor(freq),  y = dataset, label = Var1)) + 
+      #   geom_bar(stat = "identity", position = "dodge") + 
+      #   guides(fill = F) +
+      #   xlab('Genes') + ylab('Datasets') 
+      p <- ggplot(data = forbar, aes(x = as.factor(freq),  y = dataset, label = Var1)) + 
+        geom_bar(stat = "identity", position = "dodge", aes(fill = dataset)) + theme_bw() +
+        guides(fill = F) +
+        xlab('Genes') + ylab('Datasets') + scale_fill_gradient(limits=c(1,ct), low="firebrick1", high="firebrick4", space="Lab")
+      
+      p <- plotly_build(p)
+      p$x$layout$bargap <- 0.01
+      p
+    })
+  })
   
 })
 
