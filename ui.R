@@ -43,21 +43,7 @@ dashboardPage(
     
     tabItems(
       tabItem(tabName = "database",
-              #DT::dataTableOutput(outputId = "dt1", width = "100%", height = "auto")
-              DT::datatable(data = read.delim('data/data_desc.txt'),
-                            rownames = FALSE, escape = FALSE, selection = "single",
-                            extensions = c('Buttons'),
-                            options = list(
-                              dom = 'Bfrtip',
-                              buttons = list('pageLength'),
-                              searchHighlight = TRUE,
-                              initComplete = JS("function(settings, json) {",
-                                                "$(this.api().table().header()).css({'background-color': '#4C4C4C', 'color': '#fff'});",
-                                                "}"),
-                              scrollX = TRUE,
-                              scrollY = TRUE
-                            ),
-                            class = 'nowrap display')
+              DT::dataTableOutput(outputId = "dt1", width = "100%", height = "auto")
               ),
       tabItem(tabName = "dashboard",
               fluidRow(

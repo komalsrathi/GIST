@@ -3,10 +3,21 @@ source('R/viewDataTable.R')
 shinyServer(function(input, output, session){
   
   # data description
-  # output$dt1 <- DT:: renderDataTable({
-  #   data <- read.delim('data/data_desc.txt')
-  #   viewDataTable(dat = data)
-  # })
+  output$dt1 <- DT:: renderDataTable({
+    DT::datatable(data = read.delim('data/data_desc.txt'),
+                            rownames = FALSE, escape = FALSE, selection = "single",
+                            extensions = c('Buttons'),
+                            options = list(
+                              dom = 'Bfrtip',
+                              buttons = list('pageLength'),
+                              searchHighlight = TRUE,
+                              initComplete = JS("function(settings, json) {",
+                                                "$(this.api().table().header()).css({'background-color': '#4C4C4C', 'color': '#fff'});",
+                                                "}"),
+                              scrollX = TRUE
+                            ),
+                            class = 'nowrap display')
+  })
   
   # update selectInput
   observe({
