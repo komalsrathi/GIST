@@ -9,6 +9,7 @@ viewDataTable <- function(dat){
                 extensions = c('Buttons'),
                 selection = "single",
                 filter = "bottom",
+                escape = FALSE,
                 options = list(
                   dom = 'Bfrtip',
                   buttons = list('colvis','pageLength', 'copy','print',
@@ -22,5 +23,5 @@ viewDataTable <- function(dat){
                                     "$(this.api().table().header()).css({'background-color': '#373737', 'color': '#fff'});",
                                     "}"),
                   scrollX = TRUE
-                ))
+                ), class = 'nowrap display')
 }
