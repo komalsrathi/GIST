@@ -3,10 +3,10 @@ source('R/viewDataTable.R')
 shinyServer(function(input, output, session){
   
   # data description
-  output$dt1 <- DT:: renderDataTable({
-    data <- read.delim('data/data_desc.txt')
-    viewDataTable(dat = data)
-  })
+  # output$dt1 <- DT:: renderDataTable({
+  #   data <- read.delim('data/data_desc.txt')
+  #   viewDataTable(dat = data)
+  # })
   
   # update selectInput
   observe({

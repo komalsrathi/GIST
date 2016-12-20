@@ -43,7 +43,21 @@ dashboardPage(
     
     tabItems(
       tabItem(tabName = "database",
-              DT::dataTableOutput(outputId = "dt1", width = "100%", height = "auto")
+              #DT::dataTableOutput(outputId = "dt1", width = "100%", height = "auto")
+              DT::datatable(data = read.delim('data/data_desc.txt'),
+                            rownames = FALSE, escape = FALSE, selection = "single",
+                            extensions = c('Buttons'),
+                            options = list(
+                              dom = 'Bfrtip',
+                              buttons = list('pageLength'),
+                              searchHighlight = TRUE,
+                              initComplete = JS("function(settings, json) {",
+                                                "$(this.api().table().header()).css({'background-color': '#4C4C4C', 'color': '#fff'});",
+                                                "}"),
+                              scrollX = TRUE,
+                              scrollY = TRUE
+                            ),
+                            class = 'nowrap display')
               ),
       tabItem(tabName = "dashboard",
               fluidRow(
@@ -88,11 +102,6 @@ dashboardPage(
               fluidRow(column(5, actionButton(inputId = "submit1", label = "Update output"),
                               downloadButton('downloadData', 'Download'))), 
               br(),br(),
-              # fluidRow(
-              #   column(6,
-              #   DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto")),
-              #   column(6,plotlyOutput(outputId = 'plot1', width = "100%", height = "auto"))
-              # )
               DT::dataTableOutput(outputId = "dt2", width = "100%", height = "auto"),
               plotlyOutput(outputId = 'plot1', width = "100%", height = "auto")
           )
