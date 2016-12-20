@@ -1,6 +1,5 @@
 library(shiny)
 library(shinydashboard)
-library(shinyjs)
 library(DT)
 library(plotly)
 library(reshape2)
