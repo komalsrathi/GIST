@@ -12,13 +12,25 @@ shinyServer(function(input, output, session){
   observe({
     if(is.null(input$selectall2))
       return(NULL)
+    choices <- c('IMPACT' = 'IMPACT.RDS',
+                 'Transmembrane (Compartments)' = 'TMList.RDS',
+                 'GTEx Normal Expression (95% of Samples < FPKM 5)' = 'Normals_Samples95FPKM5.RDS',
+                 'GTEx Normal Expression (95% of Samples < FPKM 10)' = 'Normals_Samples95FPKM10.RDS',
+                 'GTEx Normal Expression (95% of Samples < FPKM 1)' = 'Normals_Samples95FPKM1.RDS',
+                 'Cancer Predisposition Genes (Germline)' = 'Cancer_Predisposition_Germline.RDS',
+                 'COSMIC Frequently Mutated Genes (Autonomic Ganglia, NB)' = 'COSMIC_AutonomicGanglia_NB.RDS',
+                 'Foundation One Panel (Cancer Related Genes)' = 'FoundationOne_Panel_CancerRelated.RDS',
+                 'Foundation One Panel (Rearrangements)' = 'FoundationOne_Panel_Rearrangements.RDS',
+                 'MYCN Signatures' = 'MYCN_Signatures.RDS',
+                 'Genes Correlated with Poor Survival (NBL)' = 'Genes_OverExpression_Correlated_PoorSurvival.RDS',
+                 'Genes around MYCN Locus' = 'MYCN_Locus.RDS',
+                 '11q Deletion' = '11qDeletion.RDS',
+                 '1p Deletion' = '1pDeletion.RDS')
     if(input$selectall2 > 0){
-      choices <- c('IMPACT' = 'IMPACT.RDS',
-                   'Transmembrane (Compartments)' = 'TMList.RDS',
-                   'GTEx Normal Expression (95% of Samples < FPKM 5)' = 'Normals_Samples95FPKM5.RDS',
-                   'GTEx Normal Expression (95% of Samples < FPKM 10)' = 'Normals_Samples95FPKM10.RDS',
-                   'GTEx Normal Expression (95% of Samples < FPKM 1)' = 'Normals_Samples95FPKM1.RDS')
       updateSelectInput(session, inputId = 'selectinput2', choices = choices, selected = choices)
+    }
+    if(input$unselectall2 > 0){
+      updateSelectInput(session, inputId = 'selectinput2', choices = choices, selected = NULL)
     }
   })
   
