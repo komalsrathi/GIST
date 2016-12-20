@@ -49,7 +49,7 @@ dashboardPage(
               fluidRow(
                 box(title = "Datasets", status = "danger", width = 3, solidHeader = TRUE, collapsible = T,
                     selectInput(inputId = "selectinput1",
-                                label = "Select one",
+                                label = "Select one or more",
                                 choices = c('TARGET NBL MYCN Amplified-Non Amplified (Upregulated)'='TARGETNBL_MYCN_AmplifiedvsNonAmplified_Upreg.RDS',
                                             'TARGET NBL MYCN Amplified-Non Amplified (Downregulated)'='TARGETNBL_MYCN_AmplifiedvsNonAmplified_Downreg.RDS',
                                             'TARGET NBL-GTEx Normals (Upregulated)'='TARGETNBLvsGTExNormals_upreg.RDS',
