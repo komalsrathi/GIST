@@ -26,12 +26,14 @@ shinyServer(function(input, output, session){
                  'Genes around MYCN Locus' = 'MYCN_Locus.RDS',
                  '11q Deletion' = '11qDeletion.RDS',
                  '1p Deletion' = '1pDeletion.RDS')
-    if(input$selectall2 > 0){
+
+    if(input$selectall2 == 1 | input$selectall2 %% 2 != 0){
       updateSelectInput(session, inputId = 'selectinput2', choices = choices, selected = choices)
     }
-    if(input$unselectall2 > 0){
+    if(input$selectall2 == 0 | input$selectall2 %% 2 == 0){
       updateSelectInput(session, inputId = 'selectinput2', choices = choices, selected = NULL)
     }
+
   })
   
   # fileInput
